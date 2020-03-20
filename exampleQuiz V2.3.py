@@ -1,5 +1,5 @@
 from tkinter import *
-
+import random
      
 class Question:
     def __init__(self, question, answers, correctLetter):
@@ -10,12 +10,9 @@ class Question:
     def check(self, letter, view):
         global right
         if(letter == self.correctLetter):
-            
             answer_label = Label(x, text="That's right!", bg='green')
             right += 1
-            
         else:
-            
             answer_label = Label(x, text="Oooh, That's not quite right...", bg='red')
         view.pack_forget()   
         answer_label.pack()
@@ -28,7 +25,7 @@ class Question:
         view = Frame(window)
 
         Label(view, text=self.question, wraplength=500).pack()
-        Button(view, text=self.answers[0], command=lambda *args:         self.check("A", view)).pack()
+        Button(view, text=self.answers[0], command=lambda *args: self.check("A", view)).pack()
         Button(view, text=self.answers[1], command=lambda *args: self.check("B", view)).pack()
         Button(view, text=self.answers[2], command=lambda *args: self.check("C", view)).pack()
         Button(view, text=self.answers[3], command=lambda *args: self.check("D", view)).pack()
@@ -48,10 +45,24 @@ def askQuestion():
     index += 1
     questions[index].getView(window).pack()
 
+def choosequestions():
+    questionsfile = ""
+    randq = random.randint(1,3)
+    if (randq == 1):
+        questionsfile = "questions1.txt"
+    elif (randq == 2):
+        questionsfile = "questions2.txt"
+    else:
+        questionsfile = "questions3.txt"
+    return questionsfile
+ 
 questions = []
-file = open("questions.txt", "r")
+qfile = choosequestions()
+file = open(qfile, "r")
 line = file.readline()
-while(line != ""):
+while(line != "[end]"):
+    if line == "[end]":
+        break
     questionString = line
     answers = []
     for i in range(4):
@@ -72,7 +83,7 @@ window.title("H@ck Attack")
 window.geometry('800x600')
 window.configure(background = '#007dba')
 
-img = PhotoImage(file='TempImg2.gif')
+img = PhotoImage(file='anz.gif')
 image_display = Label(window, image = img)
 
 image_display.pack(side='top')
