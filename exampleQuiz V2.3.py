@@ -1,5 +1,5 @@
 from tkinter import *
-import random
+
      
 class Question:
     def __init__(self, question, answers, correctLetter):
@@ -10,12 +10,15 @@ class Question:
     def check(self, letter, view):
         global right
         if(letter == self.correctLetter):
+            
             answer_label = Label(x, text="That's right!", bg='green')
             right += 1
+            
         else:
+            
             answer_label = Label(x, text="Oooh, That's not quite right...", bg='red')
         view.pack_forget()   
-        answer_label.pack()
+        answer_label.pack(anchor='w', fill='x')
         x.after(1000, lambda *args: answer_label.destroy())
         view.after(1000, lambda *args: self.unpackView(view))
         
@@ -25,10 +28,10 @@ class Question:
         view = Frame(window)
 
         Label(view, text=self.question, wraplength=500).pack()
-        Button(view, text=self.answers[0], command=lambda *args: self.check("A", view)).pack()
-        Button(view, text=self.answers[1], command=lambda *args: self.check("B", view)).pack()
-        Button(view, text=self.answers[2], command=lambda *args: self.check("C", view)).pack()
-        Button(view, text=self.answers[3], command=lambda *args: self.check("D", view)).pack()
+        Button(view, text=self.answers[0], command=lambda *args: self.check("A", view)).pack(anchor='w', fill='x')
+        Button(view, text=self.answers[1], command=lambda *args: self.check("B", view)).pack(anchor='w', fill='x')
+        Button(view, text=self.answers[2], command=lambda *args: self.check("C", view)).pack(anchor='w', fill='x')
+        Button(view, text=self.answers[3], command=lambda *args: self.check("D", view)).pack(anchor='w', fill='x')
         return view
 
     def unpackView(self, view):
@@ -45,24 +48,10 @@ def askQuestion():
     index += 1
     questions[index].getView(window).pack()
 
-def choosequestions():
-    questionsfile = ""
-    randq = random.randint(1,3)
-    if (randq == 1):
-        questionsfile = "questions1.txt"
-    elif (randq == 2):
-        questionsfile = "questions2.txt"
-    else:
-        questionsfile = "questions3.txt"
-    return questionsfile
- 
 questions = []
-qfile = choosequestions()
-file = open(qfile, "r")
+file = open("questions.txt", "r")
 line = file.readline()
-while(line != "[end]"):
-    if line == "[end]":
-        break
+while(line != ""):
     questionString = line
     answers = []
     for i in range(4):
@@ -83,7 +72,7 @@ window.title("H@ck Attack")
 window.geometry('800x600')
 window.configure(background = '#007dba')
 
-img = PhotoImage(file='anz.gif')
+img = PhotoImage(file='TempImg2.gif')
 image_display = Label(window, image = img)
 
 image_display.pack(side='top')
